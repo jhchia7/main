@@ -67,8 +67,8 @@ public class ProfileCommand extends Command {
 
         } catch (GoogleJsonResponseException e) {
             e.printStackTrace();
-            System.err.println("There was a service error: " +
-                    e.getDetails().getCode() + " : " + e.getDetails().getMessage());
+            System.err.println("There was a service error: "
+                    + e.getDetails().getCode() + " : " + e.getDetails().getMessage());
         } catch (Throwable t) {
             t.printStackTrace();
         }
