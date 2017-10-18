@@ -19,6 +19,11 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.YouTubeScopes;
 
+/**
+ * Returns an authorized API client service, such as a YouTube
+ * Data API client service.
+ */
+
 public final class YouTubeAuthorize {
 
 
