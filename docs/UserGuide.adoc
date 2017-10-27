@@ -126,7 +126,9 @@ Format: `findemail KEYWORD@[domain].com`
 Examples:
 
 * `findemail` `bob@example.com` +
-Returns contact with the email `bob@example.com`
+Returns contact with the email `bob@example.com` +
+
+image::findemail.png[width = "800"]
 
 
 === Locating persons by tag: `findtag`
@@ -144,7 +146,9 @@ Format: `findtag KEYWORD`
 Examples:
 
 * `findtag friends` +
-Return contact(s) with the 'friends' tag.
+Return contact(s) with the 'friends' tag. +
+
+image::findtag.png[width = "800"]
 
 === Deleting a person : `delete`
 

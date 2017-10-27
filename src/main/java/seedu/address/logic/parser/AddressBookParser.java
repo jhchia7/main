@@ -181,6 +181,9 @@ public class AddressBookParser {
         if (RedoCommand.COMMAND_WORD.contains(text)) {
             result.add(RedoCommand.COMMAND_HELP);
         }
+        if (SelectCommand.COMMAND_WORD.contains(text)) {
+            result.add(SelectCommand.COMMAND_HELP);
+        }
         return result;
     }
 
