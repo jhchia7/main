@@ -25,7 +25,7 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.YouTubeAuthorize;
-import seedu.address.logic.commands.ProfileCommand;
+
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
@@ -142,7 +142,7 @@ public class BrowserPanel extends UiPart<Region> {
 
         YouTube youtube = null;
         try {
-            youtube = YouTubeAuthorize.getYouTubeService(ProfileCommand.class);
+            youtube = YouTubeAuthorize.getYouTubeService(BrowserPanel.class);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
