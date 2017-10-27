@@ -1,7 +1,6 @@
 package seedu.address.ui;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
@@ -10,7 +9,6 @@ import com.google.api.services.youtube.model.Channel;
 import com.google.api.services.youtube.model.ChannelListResponse;
 import com.google.common.eventbus.Subscribe;
 
-import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
@@ -20,22 +18,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import javafx.scene.web.WebView;
-import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.logic.YouTubeAuthorize;
-
 import seedu.address.model.person.ReadOnlyPerson;
 
 /**
  * The Browser Panel of the App.
  */
 public class BrowserPanel extends UiPart<Region> {
-
-    public static final String DEFAULT_PAGE = "default.html";
-    public static final String GOOGLE_SEARCH_URL_PREFIX = "https://www.google.com.sg/search?safe=off&q=";
-    public static final String GOOGLE_SEARCH_URL_SUFFIX = "&cad=h";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -52,8 +43,6 @@ public class BrowserPanel extends UiPart<Region> {
     @FXML
     private TextFlow subscriberCount;
     @FXML
-    private WebView browser;
-    @FXML
     private TextFlow viewCount;
     @FXML
     private TextFlow createDate;
@@ -66,19 +55,6 @@ public class BrowserPanel extends UiPart<Region> {
         getRoot().setOnKeyPressed(Event::consume);
 
         registerAsAnEventHandler(this);
-    }
-
-
-    public void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
-    }
-
-    /**
-     * Loads a default HTML file with a background that matches the general theme.
-     */
-    private void loadDefaultPage() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        loadPage(defaultPage.toExternalForm());
     }
 
     /**
@@ -134,7 +110,14 @@ public class BrowserPanel extends UiPart<Region> {
      */
 
     public void freeResources() {
-        browser = null;
+
+        channelTitle = null;
+        channelThumbnail = null;
+        channelDescription = null;
+        subscriberCount = null;
+        viewCount = null;
+        createDate = null;
+
     }
 
     private Channel getChannel(ReadOnlyPerson person) {

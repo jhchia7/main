@@ -19,7 +19,8 @@ public class SelectCommand extends Command {
     public static final String COMMAND_HELP = "select INDEX";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Selects the person identified by the index number used in the last person listing.\n"
+            + ": Selects and shows profile of the person identified by the "
+            + "index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
