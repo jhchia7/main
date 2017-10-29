@@ -74,8 +74,8 @@ public class BrowserPanel extends UiPart<Region> {
         channelTitle.getChildren().clear();
         channelTitle.getChildren().add(title);
 
-        Text description = new Text(getChannelDescription());
-        description.setFont(Font.font("Calibri"));
+        Text description = new Text("Description:\n" + getChannelDescription());
+        description.setFont(Font.font("Calibri", 15));
         description.setFill(Color.WHITE);
         channelDescription.getChildren().clear();
         channelDescription.getChildren().add(description);
