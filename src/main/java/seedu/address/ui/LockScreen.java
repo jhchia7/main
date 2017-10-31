@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -30,6 +31,7 @@ public class LockScreen extends UiPart<Region> {
     private static final int MIN_WIDTH = 300;
     private int x = 0;
     private int y = 0;
+    private String theme = "";
 
     private Logic logic;
     private Config config;
@@ -42,6 +44,9 @@ public class LockScreen extends UiPart<Region> {
 
     @FXML
     private StackPane resultDisplayPlaceholder;
+
+    @FXML
+    private VBox vBox;
 
     public LockScreen(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
@@ -59,6 +64,8 @@ public class LockScreen extends UiPart<Region> {
         setWindowDefaultSize();
         Scene scene = new Scene(getRoot());
         primaryStage.setScene(scene);
+
+        initThemeFromSettings();
     }
 
     /**
@@ -79,6 +86,12 @@ public class LockScreen extends UiPart<Region> {
             }
         });
         pwdBoxPlaceholder.getChildren().add(pwBox);
+    }
+
+    private void initThemeFromSettings() {
+        theme = prefs.getGuiSettings().getTheme();
+        vBox.getStylesheets().remove(0);
+        vBox.getStylesheets().add("/view/" + theme + ".css");
     }
 
     void loadMainWindow() {

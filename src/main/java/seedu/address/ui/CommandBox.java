@@ -10,6 +10,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -43,7 +44,7 @@ public class CommandBox extends UiPart<Region> {
      * Handles the key press event, {@code keyEvent}.
      */
     @FXML
-    private void handleKeyReleased(KeyEvent keyEvent) {
+    private void handleKeyReleased(KeyEvent keyEvent) throws IllegalValueException {
         switch (keyEvent.getCode()) {
         case UP:
             // As up and down buttons will alter the position of the caret,

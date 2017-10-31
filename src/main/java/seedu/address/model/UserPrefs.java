@@ -17,7 +17,7 @@ public class UserPrefs {
     private String password = "";
 
     public UserPrefs() {
-        this.setGuiSettings(500, 500, 0, 0);
+        this.setGuiSettings(500, 500, 0, 0, "DarkTheme");
     }
 
     public GuiSettings getGuiSettings() {
@@ -28,8 +28,8 @@ public class UserPrefs {
         this.guiSettings = guiSettings;
     }
 
-    public void setGuiSettings(double width, double height, int x, int y) {
-        guiSettings = new GuiSettings(width, height, x, y);
+    public void setGuiSettings(double width, double height, int x, int y, String theme) {
+        guiSettings = new GuiSettings(width, height, x, y, theme);
     }
 
     public String getAddressBookFilePath() {

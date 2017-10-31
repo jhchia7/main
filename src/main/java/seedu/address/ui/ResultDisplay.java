@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 
@@ -28,9 +29,12 @@ public class ResultDisplay extends UiPart<Region> {
     @FXML
     private TextArea resultDisplay;
 
+    @FXML
+    private StackPane placeHolder;
+
     public ResultDisplay() {
         super(FXML);
-        resultDisplay.setVisible(false);
+        toggleResultDisplay(false);
         resultDisplay.textProperty().bind(displayed);
         registerAsAnEventHandler(this);
     }
@@ -40,9 +44,9 @@ public class ResultDisplay extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         displayed.setValue(event.message);
         if (event.message.equals("")) {
-            resultDisplay.setVisible(false);
+            toggleResultDisplay(false);
         } else {
-            resultDisplay.setVisible(true);
+            toggleResultDisplay(true);
         }
 
         if (event.isError) {
@@ -52,6 +56,12 @@ public class ResultDisplay extends UiPart<Region> {
         }
         //Platform.runLater(() -> displayed.setValue(event.message));
     }
+
+    private void toggleResultDisplay(boolean visible) {
+        resultDisplay.setVisible(visible);
+        placeHolder.setMouseTransparent(!visible);
+    }
+
     private void setStyleToDefault() {
         resultDisplay.getStyleClass().remove(ERROR_STYLE_CLASS);
     }

@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.nio.file.NoSuchFileException;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -14,10 +15,12 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeThemeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.util.FxViewUtil;
@@ -34,6 +37,7 @@ public class MainWindow extends UiPart<Region> {
     private static final String FXML = "MainWindow.fxml";
     private static final int MIN_HEIGHT = 600;
     private static final int MIN_WIDTH = 450;
+    private String theme = "";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -67,6 +71,9 @@ public class MainWindow extends UiPart<Region> {
     @FXML
     private StackPane bottomPlaceholder;
 
+    @FXML
+    private VBox vBox;
+
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML);
 
@@ -86,6 +93,13 @@ public class MainWindow extends UiPart<Region> {
 
         setAccelerators();
         registerAsAnEventHandler(this);
+        initThemeFromSettings();
+    }
+
+    private void initThemeFromSettings() {
+        theme = prefs.getGuiSettings().getTheme();
+        vBox.getStylesheets().remove(0);
+        vBox.getStylesheets().add("/view/" + theme + ".css");
     }
 
     public Stage getPrimaryStage() {
@@ -153,6 +167,13 @@ public class MainWindow extends UiPart<Region> {
         primaryStage.hide();
     }
 
+    @Subscribe
+    void changeTheme (ChangeThemeEvent event) throws NoSuchFileException {
+        theme = event.themeName;
+        vBox.getStylesheets().remove(0);
+        vBox.getStylesheets().add("/view/" + event.themeName + ".css");
+    }
+
     private void setTitle(String appTitle) {
         primaryStage.setTitle(appTitle);
     }
@@ -187,7 +208,7 @@ public class MainWindow extends UiPart<Region> {
      */
     GuiSettings getCurrentGuiSetting() {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                (int) primaryStage.getX(), (int) primaryStage.getY());
+                (int) primaryStage.getX(), (int) primaryStage.getY(), theme);
     }
 
     /**

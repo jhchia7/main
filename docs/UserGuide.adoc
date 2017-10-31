@@ -14,6 +14,14 @@ endif::[]
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
+== Introduction
+TABCC (The Address Book for Content Creators) is an address book application for YouTubers to store contact information of other YouTubers. TABCC makes those contact information accessible and easy to refer to. +
+At the current stage of development, TABCC is only fully compatible with the Windows platform due to a lack of resources. However, the team may consider adding support for other platforms if enough users request for it.
+
+== About
+This document provides both an in-depth guide to each individual command and a summary of commands you can use. +
+If you run into any trouble regarding the usage of this user guide and/or the application, refer to the FAQs section. In the event that the FAQs section does not have a solution to your problem, feel free to post your questions in the forums where the team and other users would be able to help you.
+
 == Quick Start
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
@@ -22,18 +30,19 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `TABCC.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Double-click the file to start the app. The GUI (Figure 3.1) should appear in a few seconds.
 +
 image::Ui.png[width="790"]
+_Figure 3.1: GUI of application_
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 c/UC-lHJZR3Gqxm24_Vd_AJ5Yw` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -57,10 +66,11 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS c/UC-lHJZR3Gqxm24_Vd_AJ5Yw [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of tags (including 0) +
+Check out the FAQs section on link:#get-channel-id[obtaining a YouTuber's Channel ID]
 
 Examples:
 
@@ -75,7 +85,7 @@ Format: `list`
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [c/CHANNELID] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -129,6 +139,7 @@ Examples:
 Returns contact with the email `bob@example.com` +
 
 image::findemail.png[width = "800"]
+_Figure 4.6.1: Find email_
 
 
 === Locating persons by tag: `findtag`
@@ -149,6 +160,7 @@ Examples:
 Return contact(s) with the 'friends' tag. +
 
 image::findtag.png[width = "800"]
+_Figure 4.7.1 : Find tag_
 
 === Deleting a person : `delete`
 
@@ -193,13 +205,16 @@ Adds the 1st person in the results of the `find` command to the favourites list.
 
 === Selecting a person : `select`
 
-Selects the person identified by the index number used in the last person listing. +
+Selects the person identified by the index number used in the last person listing and shows the YouTube profile of the person (Figure 2.10.1). +
 Format: `select INDEX`
+
+image::Ui.png[width=600]
+_Figure 4.10.1 : Profile GUI_
 
 ****
 * Selects the person and shows the profile of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* Ensure that the index is a *positive integer*: 1, 2, 3, ...
 ****
 
 Examples:
@@ -212,36 +227,36 @@ Selects the 2nd person in the address book.
 Selects the 1st person in the results of the `find` command. +
 
 
-***
+
 
 === Sending a message to a person : `send`
 
-This command will redirect you to third-party communication applications like Windows Mail and WhatsApp `(to-be-implemented)`. This command will automatically fill up the information of your contact in the third party application for you. +
+This command will redirect you to third-party communication applications like Windows Mail and WhatsApp (to-be-implemented). This command will automatically fill up the information of your contact in the third party application for you. +
 Format: `send INDEX`
 
-==== Steps:
+===== Steps:
 
-Type `list` to display the list of contacts in TABCC.
+*Step 1.* Type `list` to display the list of contacts in TABCC.
 
 image::listCommand.png[width="400"]
-_Figure 2.9.1.1 : List of contacts_
+_Figure 4.11.1 : List of contacts_
 
-Type `send 2` to send an email to the second contact in the list. If you have entered the command in the correct format, you should see the Windows Mail application open.
+*Step 2.* Type `send 2` to send an email to the second contact in the list. If you have entered the command in the correct format, you should see the Windows Mail application open.
 
-image::Windows-mail-welcome.png[width="400"]
-_Figure 2.9.1.2 : List of contacts_
+image::windows-mail-welcome.png[width="400"]
+_Figure 4.11.2 : List of contacts_
 
-If you have already signed in to your email account, skip this step.
+*Step 3.* If you have already signed in to your email account, skip this step.
 If you have not signed in, click on the "Get Started" button (Figure 2.9.1.2) and add your email account. (Figure 2.9.1.3)
 
 image::windows-mail-add.png[width="300"]
-_Figure 2.9.1.3 : Add an account_
+_Figure 4.11.3 : Add an account_
 
-If you have reached this step, congratulations! You should be able to see your inbox and an empty mail template with the email of your contact automatically filled out for you. (Figure 2.9.1.4)
+*Step 4.* If you have reached this step, congratulations! You should be able to see your inbox and an empty mail template with the email of your contact automatically filled out for you. (Figure 2.9.1.4)
 Close or minimise the mail application when done to return to AddressBook.
 
 image::windows-mail-send.png[width="800"]
-_Figure 2.9.1.4 : New email_
+_Figure 4.11.4 : New email_
 
 
 
@@ -255,7 +270,7 @@ _Figure 2.9.1.4 : New email_
 * The index *must be a positive integer* `1, 2, 3, ...`
 ====
 
-***
+
 
 === Listing entered commands : `history`
 
@@ -327,6 +342,11 @@ Format: `clear`
 Changes the password required to access the address book. +
 Format: `changepwd [old_password] [new_password]`
 
+=== Change Theme : `theme`
+
+Changes the theme. Currently only has `light` or `dark` themes +
+Format: `theme [theme_name]`
+
 === Exiting the program : `exit`
 
 Exits the program. +
@@ -342,10 +362,26 @@ There is no need to save manually.
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
+[[get-channel-id]]
+*Q*: How do I find the Channel ID of a YouTube channel? +
+*A*: YouTube allows a channel to have link:https://support.google.com/youtube/answer/6180214?hl=en[multiple URLs].
+If the URL of the homepage of a YouTube channel you visit looks like "https://www.youtube.com/channel/UCLMtDePlMyiqv2XC_ByNEVQ", simply copy the characters after "channel/" and you'll get the Channel ID. Otherwise, follow the steps below.
+
+Step 1. Go to the page of any video of the target YouTube channel. +
+Step 2. Click on the channel name below the video player as seen from Figure 3.1 and you should be redirected to the homepage of the YouTube channel. (You can also see the channel ID from the URL preview at the bottom of Figure 3.1.)
+
+image::get-channel-id-video.png[width=500]
+_Figure 5.1 : Random video page of the target channel_
+
+Step 3. Copy the channel ID from the URL of the page.
+
+image::get-channel-id-copy.png[width=500]
+_Figure 5.1 : Random video page of the target channel_
+
 == Command Summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 c/UC-lHJZR3Gqxm24_Vd_AJ5Yw t/friend t/colleague`
 * *Clear* : `clear`
 * *Changepwd* : `changepwd NEW_PASSWORD OLD_PASSWORD`
 * *Delete* : `delete INDEX` +
@@ -354,10 +390,15 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
 * *Help* : `help`
+* *History* : `history`
+* *List* : `list`
+* *Redo* : `redo`
 * *Select* : `select INDEX` +
 e.g.`select 2`
-* *History* : `history`
+* *Send* : `Send INDEX` +
+e.g.`send 2`
+* *Theme* : `theme THEME_NAME` +
+e.g. `theme light`
 * *Undo* : `undo`
-* *Redo* : `redo`
+
