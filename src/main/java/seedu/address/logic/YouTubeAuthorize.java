@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import com.google.api.client.auth.oauth2.Credential;
@@ -18,6 +19,11 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.YouTubeScopes;
+import com.google.api.services.youtube.model.Channel;
+import com.google.api.services.youtube.model.ChannelListResponse;
+
+import seedu.address.model.person.ChannelId;
+import seedu.address.ui.BrowserPanel;
 
 /**
  * Return an authorized API client service, such as a YouTube
@@ -100,6 +106,51 @@ public final class YouTubeAuthorize {
         return new YouTube.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
+    }
+
+    public static Channel getYouTubeChannel(String targetChannelId) {
+
+        YouTube youtube = null;
+        try {
+            youtube = YouTubeAuthorize.getYouTubeService(BrowserPanel.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("part", "statistics,snippet");
+        parameters.put("id", targetChannelId);
+
+        YouTube.Channels.List channelsListByIdRequest = null;
+        try {
+            channelsListByIdRequest = youtube.channels().list(parameters.get("part").toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (parameters.containsKey("id") && parameters.get("id") != "") {
+            channelsListByIdRequest.setId(parameters.get("id").toString());
+        }
+
+        ChannelListResponse response = null;
+        try {
+            response = channelsListByIdRequest.execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Channel youtubeChannel = null;
+        try {
+            youtubeChannel = response.getItems().get(0);
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            return youtubeChannel;
+        }
+
+        return youtubeChannel;
+
     }
 
 }

@@ -66,7 +66,7 @@ public class BrowserPanel extends UiPart<Region> {
 
     private void loadPersonPage(ReadOnlyPerson person) throws IOException {
 
-        channel = getChannel(person);
+        channel = YouTubeAuthorize.getYouTubeChannel(person.getChannelId().toString());
 
         Text title = new Text(getChannelTitle());
         title.setFont(Font.font("Calibri", 40));
@@ -120,44 +120,6 @@ public class BrowserPanel extends UiPart<Region> {
 
     }
 
-    private Channel getChannel(ReadOnlyPerson person) {
-        String targetChannelId = person.getChannelId().toString();
-
-        YouTube youtube = null;
-        try {
-            youtube = YouTubeAuthorize.getYouTubeService(BrowserPanel.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-
-        HashMap<String, String> parameters = new HashMap<>();
-        parameters.put("part", "statistics,snippet");
-        parameters.put("id", targetChannelId);
-
-        YouTube.Channels.List channelsListByIdRequest = null;
-        try {
-            channelsListByIdRequest = youtube.channels().list(parameters.get("part").toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (parameters.containsKey("id") && parameters.get("id") != "") {
-            channelsListByIdRequest.setId(parameters.get("id").toString());
-        }
-
-        ChannelListResponse response = null;
-        try {
-            response = channelsListByIdRequest.execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Channel youtubeChannel = response.getItems().get(0);
-        return youtubeChannel;
-
-    }
 
     private String getChannelTitle() throws IOException {
 
