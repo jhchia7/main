@@ -1,12 +1,9 @@
 package seedu.address.ui;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.logging.Logger;
 
-import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.Channel;
-import com.google.api.services.youtube.model.ChannelListResponse;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.event.Event;
@@ -130,8 +127,6 @@ public class BrowserPanel extends UiPart<Region> {
     private Image getChannelThumbnail() {
 
         Image thumbnail = new Image(channel.getSnippet().getThumbnails().getHigh().getUrl());
-
-        //Image thumbnail = new Image("/images/clock.png");
 
         return thumbnail;
 

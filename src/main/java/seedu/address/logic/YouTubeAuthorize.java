@@ -22,7 +22,6 @@ import com.google.api.services.youtube.YouTubeScopes;
 import com.google.api.services.youtube.model.Channel;
 import com.google.api.services.youtube.model.ChannelListResponse;
 
-import seedu.address.model.person.ChannelId;
 import seedu.address.ui.BrowserPanel;
 
 /**
@@ -41,14 +40,14 @@ public final class YouTubeAuthorize {
             System.getProperty("user.home"), ".credentials/youtube-java-quickstart");
 
     /** Global instance of the {@link FileDataStoreFactory}. */
-    private static FileDataStoreFactory DATA_STORE_FACTORY;
+    private static FileDataStoreFactory dataStoreFactory;
 
     /** Global instance of the JSON factory. */
     private static final JsonFactory JSON_FACTORY =
             JacksonFactory.getDefaultInstance();
 
     /** Global instance of the HTTP transport. */
-    private static HttpTransport HTTP_TRANSPORT;
+    private static HttpTransport httpTransport;
 
     /** Global instance of the scopes required by this quickstart.
      *
@@ -60,8 +59,8 @@ public final class YouTubeAuthorize {
 
     static {
         try {
-            HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-            DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
+            httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+            dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
         } catch (Throwable t) {
             t.printStackTrace();
             System.exit(1);
@@ -85,8 +84,8 @@ public final class YouTubeAuthorize {
         // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow =
                 new GoogleAuthorizationCodeFlow.Builder(
-                        HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, SCOPES)
-                        .setDataStoreFactory(DATA_STORE_FACTORY)
+                        httpTransport, JSON_FACTORY, clientSecrets, SCOPES)
+                        .setDataStoreFactory(dataStoreFactory)
                         .setAccessType("offline")
                         .build();
         Credential credential = new AuthorizationCodeInstalledApp(
@@ -103,7 +102,7 @@ public final class YouTubeAuthorize {
      */
     public static YouTube getYouTubeService(Class classToAuthorize) throws IOException, ClassNotFoundException {
         Credential credential = authorize(classToAuthorize);
-        return new YouTube.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+        return new YouTube.Builder(httpTransport, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
     }
@@ -145,7 +144,6 @@ public final class YouTubeAuthorize {
         try {
             youtubeChannel = response.getItems().get(0);
         } catch (IndexOutOfBoundsException e) {
-            e.printStackTrace();
             return youtubeChannel;
         }
 
