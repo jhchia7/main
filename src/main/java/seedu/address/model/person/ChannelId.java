@@ -1,7 +1,6 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.YouTubeAuthorize.getYouTubeChannel;
 
 import com.google.api.services.youtube.model.Channel;
 
