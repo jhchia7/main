@@ -145,7 +145,7 @@ public abstract class AddressBookSystemTest {
      */
     private void rememberStates() {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
-//        getBrowserPanel().rememberUrl();
+        //getBrowserPanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getPersonListPanel().rememberSelectedPersonCard();
@@ -166,13 +166,15 @@ public abstract class AddressBookSystemTest {
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
         String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
-//        URL expectedUrl;
-//        try {
-//            expectedUrl = new URL(GOOGLE_SEARCH_URL_PREFIX + selectedCardName.replaceAll(" ", "+")
-//                    + GOOGLE_SEARCH_URL_SUFFIX);
-//        } catch (MalformedURLException mue) {
-//            throw new AssertionError("URL expected to be valid.");
-//        }
+        /*
+        URL expectedUrl;
+        try {
+        expectedUrl = new URL(GOOGLE_SEARCH_URL_PREFIX + selectedCardName.replaceAll(" ", "+")
+        + GOOGLE_SEARCH_URL_SUFFIX);
+        } catch (MalformedURLException mue) {
+        throw new AssertionError("URL expected to be valid.");
+        }
+        */
 
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
