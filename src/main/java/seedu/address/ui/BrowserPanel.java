@@ -77,19 +77,19 @@ public class BrowserPanel extends UiPart<Region> {
         channelDescription.getChildren().clear();
         channelDescription.getChildren().add(description);
 
-        Text subNumber = new Text(getSubCount());
+        Text subNumber = new Text("Subscribers: " + getSubCount());
         subNumber.setFont(Font.font("Calibri", 25));
         subNumber.setFill(Color.WHITE);
         subscriberCount.getChildren().clear();
         subscriberCount.getChildren().add(subNumber);
 
-        Text viewNumber = new Text(getViewCount());
+        Text viewNumber = new Text("Views: " + getViewCount());
         viewNumber.setFont(Font.font("Calibri", 25));
         viewNumber.setFill(Color.WHITE);
         viewCount.getChildren().clear();
         viewCount.getChildren().add(viewNumber);
 
-        Text date = new Text(getCreateDate());
+        Text date = new Text("Created: " + getCreateDate());
         date.setFont(Font.font("Calibri", 25));
         date.setFill(Color.WHITE);
         createDate.getChildren().clear();
@@ -139,19 +139,67 @@ public class BrowserPanel extends UiPart<Region> {
 
     private String getSubCount() {
 
-        return "Subscribers: " + channel.getStatistics().getSubscriberCount().toString();
+        return formatNumber(channel.getStatistics().getSubscriberCount().longValue());
     }
 
     private String getViewCount() {
 
-        return "Views: " + channel.getStatistics().getViewCount().toString();
+        return formatNumber(channel.getStatistics().getViewCount().longValue());
     }
 
     private String getCreateDate() {
+        return channel.getSnippet().getPublishedAt().toStringRfc3339();
 
-        return "Created: " + channel.getSnippet().getPublishedAt().toString();
+        /*
+        DateTime dateTime = DateTime.parseRfc3339(channel.getSnippet().getPublishedAt().toStringRfc3339());
+        Date date = new Date(dateTime.getValue());
+        DateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, ''yy");
+        TimeZone timeZone = TimeZone.getTimeZone("GMT");
+        dateFormat.setTimeZone(timeZone);
+        String formattedDate = null;
+        try {
+        formattedDate = dateFormat.parse(date.toString()).toString();
+        } catch (ParseException e) {
+        e.printStackTrace();
+        }
+        return formattedDate;
+
+        Pattern RFC3339_PATTERN = Pattern.compile(
+        "^(<year>\\d{4})-(<month>\\d{2})-(<day>\\d{2})" // yyyy-MM-dd
+        + "([Tt](\\d{2}):(\\d{2}):(\\d{2})(\\.\\d+)?)?" // 'T'HH:mm:ss.milliseconds
+        + "([Zz]|([+-])(\\d{2}):(\\d{2}))?"); // 'Z' or time zone shift HH:mm following '+' or '-'
+        Matcher matcher = RFC3339_PATTERN.matcher(channel.getSnippet().getPublishedAt().toStringRfc3339());
+        int year = Integer.parseInt(matcher.group("year")); // yyyy
+        int month = Integer.parseInt(matcher.group("month")) - 1; // MM
+        int day = Integer.parseInt(matcher.group("day")); // dd
+        String date = (day + " " + month + " " + year);
+        return date;
+
+        LocalDate date = LocalDate.parse(channel.getSnippet().getPublishedAt().toString());
+        return date.toString() ;
+        */
     }
 
+    /**
+     * Formats number with thousand, million and billion suffix
+     * @param number to be formatted with suffix
+     * @return
+     */
+    private String formatNumber(long number) {
+        final long thousand = 1000L;
+        final long million = 1000000L;
+        final long billion = 1000000000L;
+
+        if (number >= billion) {
+            return String.format("%.1f%c", (double) number / billion, 'b');
+        } else if (number >= million) {
+            return String.format("%.1f%c", (double) number / million, 'm');
+        } else if (number >= thousand) {
+            return String.format("%.1f%c", (double) number / thousand, 'k');
+        } else {
+            return number + "";
+        }
+    }
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) throws IOException {
