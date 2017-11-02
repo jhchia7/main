@@ -48,9 +48,6 @@ public class BrowserPanel extends UiPart<Region> {
     public BrowserPanel() {
         super(FXML);
 
-        // To prevent triggering events for typing inside the loaded Web page.
-        getRoot().setOnKeyPressed(Event::consume);
-
         registerAsAnEventHandler(this);
     }
 
@@ -150,34 +147,6 @@ public class BrowserPanel extends UiPart<Region> {
     private String getCreateDate() {
         return channel.getSnippet().getPublishedAt().toStringRfc3339();
 
-        /*
-        DateTime dateTime = DateTime.parseRfc3339(channel.getSnippet().getPublishedAt().toStringRfc3339());
-        Date date = new Date(dateTime.getValue());
-        DateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, ''yy");
-        TimeZone timeZone = TimeZone.getTimeZone("GMT");
-        dateFormat.setTimeZone(timeZone);
-        String formattedDate = null;
-        try {
-        formattedDate = dateFormat.parse(date.toString()).toString();
-        } catch (ParseException e) {
-        e.printStackTrace();
-        }
-        return formattedDate;
-
-        Pattern RFC3339_PATTERN = Pattern.compile(
-        "^(<year>\\d{4})-(<month>\\d{2})-(<day>\\d{2})" // yyyy-MM-dd
-        + "([Tt](\\d{2}):(\\d{2}):(\\d{2})(\\.\\d+)?)?" // 'T'HH:mm:ss.milliseconds
-        + "([Zz]|([+-])(\\d{2}):(\\d{2}))?"); // 'Z' or time zone shift HH:mm following '+' or '-'
-        Matcher matcher = RFC3339_PATTERN.matcher(channel.getSnippet().getPublishedAt().toStringRfc3339());
-        int year = Integer.parseInt(matcher.group("year")); // yyyy
-        int month = Integer.parseInt(matcher.group("month")) - 1; // MM
-        int day = Integer.parseInt(matcher.group("day")); // dd
-        String date = (day + " " + month + " " + year);
-        return date;
-
-        LocalDate date = LocalDate.parse(channel.getSnippet().getPublishedAt().toString());
-        return date.toString() ;
-        */
     }
 
     /**
