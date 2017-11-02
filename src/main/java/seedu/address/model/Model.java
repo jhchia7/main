@@ -30,10 +30,6 @@ public interface Model {
     /** Adds the given person */
     void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
 
-    /** Favourites the given person */
-    void favPerson(ReadOnlyPerson person, boolean fave)
-            throws PersonNotFoundException, DuplicatePersonException;
-
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -54,5 +50,9 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
+
+    //ObservableList<ReadOnlyPerson> sortNameDescend();
+
+    ObservableList<ReadOnlyPerson> sortNameAscend();
 
 }

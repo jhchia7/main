@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -55,7 +56,7 @@ public class LogicManager extends ComponentManager implements Logic {
      * @return output of available commands as a String
      */
 
-    public String liveHelp(String commandText) {
+    public String liveHelp(String commandText) throws IllegalValueException {
         String finalString = "";
         ArrayList<String> result = addressBookParser.filterCommand(commandText);
         for (String string: result) {

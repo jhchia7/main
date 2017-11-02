@@ -23,14 +23,15 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<ChannelId> channelId;
-    private boolean favourite;
+    private ObjectProperty<Favourite> favourite;
 
     private ObjectProperty<UniqueTagList> tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, ChannelId channelId, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, ChannelId channelId, Set<Tag> tags,
+                  Favourite favourite) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
@@ -39,7 +40,7 @@ public class Person implements ReadOnlyPerson {
         this.channelId = new SimpleObjectProperty<>(channelId);
         // protect internal tags from changes in the arg list
         this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        this.favourite = false;
+        this.favourite = new SimpleObjectProperty<>(favourite);
     }
 
     /**
@@ -47,7 +48,7 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getChannelId(), source.getTags());
+                source.getChannelId(), source.getTags(), source.getFavourite());
     }
 
     public void setName(Name name) {
@@ -120,13 +121,18 @@ public class Person implements ReadOnlyPerson {
         return channelId.get();
     }
 
-    public void setFavourite(boolean fav) {
-        this.favourite = fav;
+    @Override
+    public ObjectProperty<Favourite> faveProperty() {
+        return favourite;
+    }
+
+    public void setFavourite(Favourite fav) {
+        this.favourite.set(fav);
     }
 
     @Override
-    public boolean getFavourite() {
-        return this.favourite;
+    public Favourite getFavourite() {
+        return favourite.get();
     }
 
     /**

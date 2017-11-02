@@ -463,13 +463,13 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
-=== Enhanced select command (Shows profile)
+=== Select command
 
-In its initial form, the select command shows the Google results of the contact’s name. With the application targeting a more specific group of users, YouTubers, the team believes that the select command can be better used to display the profile of the YouTuber instead. The select command opens the profile of the contact selected. The profile of the contacts displays various dynamic and static information. The static (manually changed by user) information is entered by the user at time of adding contact (refer to add command). The dynamic information is updated automatically by the application using the YouTube Data API.
+In its initial form, the select command shows the Google results of the contact’s name. With the application targeting a more specific group of users, YouTubers, the team believes that the select command can be better used to display the profile of the YouTuber instead. The select command opens the profile of the contact selected. The profile of the contacts displays various link:#dynamic-information[dynamic information] which is updated automatically by the application using the YouTube Data API.
 
 ==== Dynamic information:
-link:#dynamic-information[Dynamic information] is information retrieved from the YouTube servers every time the user views the profile of the contact. +
-*Dynamic information includes:*
+Dynamic information is information retrieved from the YouTube servers every time the user views the profile of the contact. +
+*Categories included in current version:*
 
 . Channel title
 . Channel thumbnail
@@ -478,14 +478,19 @@ link:#dynamic-information[Dynamic information] is information retrieved from the
 . Total view count
 
 ==== Profile GUI
-Displayed at the top are the dynamic information about the channel, that the contact is affiliated with, as stated above. Displayed at the bottom would be the static information of the individual contact (Figure 3.3.2.1). +
+Displayed in the profile are the dynamic information about the channel, that the contact is affiliated with, as stated above. (Figure 3.3.2.1). +
 
 
 image::profile_ui.png[width="600"]
-_Figure 3.3.2.1 : Positions of the different categories of information_
+_Figure 3.5.2.1 : Graphical User interface for profile_
 
 ==== Planned extensions for the feature
-The ability for the user to choose which data to display for their contacts would be implemented in future updates to increase customisability. Until then, the team has chosen what we believe are categories which YouTubers track and celebrate achievements in, for each other. This is done, after careful deliberation and consideration. Subscriber count was chosen to monitor progress towards the various YouTube Play Buttons. Video view count is the indicator of the number of people they have reached and is an important factor in channel success.
+The ability for the user to choose which data to display for their contacts would be implemented in future updates to increase customisability. Until then, the team has chosen what we believe are categories which YouTubers place emphasis on. +
+
+Another future addition to the profile would be the inclusion of information of other YouTubers of the channel (if channel is maintained by more than 1 YouTuber). This could be done by the implementation of a new Channel Model as seen below.
+
+image::class-diagram-channel.png[width="500"]
+_Figure 3.5.3.2 : Profile graphical user interface_
 
 ==== Design Considerations
 
@@ -497,7 +502,7 @@ The ability for the user to choose which data to display for their contacts woul
 **Pros:** Might be more intuitive for the user and easier to type in. +
 **Cons:** There are so many channels with the same highly sought after names (sans the bigger channels). Although it will be easier to type in for the user as most channel names are easy to read, the users might mistake the channel title for the channel username, resulting in the wrong channel being saved. +
 
-=======
+
 === Favourites mechanism
 
 The Favourites mechanism is facilitated by a 'favourite' boolean variable, which resides inside `Person`. It flags each 'Person' object as either a favourite, or not one.
@@ -1184,33 +1189,3 @@ Version
 	A way to categorize the current state of a software as it is developed and released.
 	One has to note that there is no industry standard for how a version number should be formatted.
 	Therefore, different companies/developers have different style of formatting version number.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...

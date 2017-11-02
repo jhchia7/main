@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ChangePwdCommand;
+import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
@@ -17,6 +19,7 @@ import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FavCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.FindEmailCommand;
+import seedu.address.logic.commands.FindFavCommand;
 import seedu.address.logic.commands.FindTagCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
@@ -24,6 +27,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SendCommand;
+import seedu.address.logic.commands.SortAscendingCommand;
 import seedu.address.logic.commands.UndoCommand;
 
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -89,6 +93,10 @@ public class AddressBookParser {
         case FindTagCommand.COMMAND_WORD:
             return new FindTagCommandParser().parse(arguments);
 
+        case FindFavCommand.COMMAND_WORD:
+        case FindFavCommand.COMMAND_ALIAS:
+            return new FindFavCommandParser().parse(arguments);
+
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
@@ -117,9 +125,17 @@ public class AddressBookParser {
         case SendCommand.COMMAND_ALIAS:
             return new SendCommandParser().parse(arguments);
 
+        case SortAscendingCommand.COMMAND_WORD:
+            return new SortAscendingCommand();
+
         case ChangePwdCommand.COMMAND_WORD:
         case ChangePwdCommand.COMMAND_ALIAS:
             return new ChangePwdCommandParser().parse(arguments);
+
+        case ChangeThemeCommand.COMMAND_WORD:
+        case ChangeThemeCommand.COMMAND_ALIAS:
+            return new ChangeThemeCommandParser().parse(arguments);
+
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
@@ -132,52 +148,56 @@ public class AddressBookParser {
      * @return ArrayList of command words
      */
 
-    public ArrayList<String> filterCommand(String text) {
+    public ArrayList<String> filterCommand(String text) throws IllegalValueException {
+        String[] array = ParserUtil.parseByDelimiter(text, " ");
         ArrayList<String> result = new ArrayList<String>();
-        if (AddCommand.COMMAND_WORD.contains(text)) {
+        if (AddCommand.COMMAND_WORD.contains(array[0])) {
             result.add(AddCommand.COMMAND_HELP);
         }
-        if (ChangePwdCommand.COMMAND_WORD.contains(text)) {
+        if (ChangePwdCommand.COMMAND_WORD.contains(array[0])) {
             result.add(ChangePwdCommand.COMMAND_HELP);
         }
-        if (EditCommand.COMMAND_WORD.contains(text)) {
+        if (EditCommand.COMMAND_WORD.contains(array[0])) {
             result.add(EditCommand.COMMAND_HELP);
         }
-        if (DeleteCommand.COMMAND_WORD.contains(text)) {
+        if (DeleteCommand.COMMAND_WORD.contains(array[0])) {
             result.add(DeleteCommand.COMMAND_HELP);
         }
-        if (FavCommand.COMMAND_WORD.contains(text)) {
+        if (FavCommand.COMMAND_WORD.contains(array[0])) {
             result.add(FavCommand.COMMAND_HELP);
         }
-        if (ClearCommand.COMMAND_WORD.contains(text)) {
+        if (ClearCommand.COMMAND_WORD.contains(array[0])) {
             result.add(ClearCommand.COMMAND_HELP);
         }
-        if (FindCommand.COMMAND_WORD.contains(text)) {
+        if (FindCommand.COMMAND_WORD.contains(array[0])) {
             result.add(FindCommand.COMMAND_HELP);
         }
-        if (ListCommand.COMMAND_WORD.contains(text)) {
+        if (ListCommand.COMMAND_WORD.contains(array[0])) {
             result.add(ListCommand.COMMAND_HELP);
         }
-        if (HistoryCommand.COMMAND_WORD.contains(text)) {
+        if (HistoryCommand.COMMAND_WORD.contains(array[0])) {
             result.add(HistoryCommand.COMMAND_HELP);
         }
-        if (HelpCommand.COMMAND_WORD.contains(text)) {
+        if (HelpCommand.COMMAND_WORD.contains(array[0])) {
             result.add(HelpCommand.COMMAND_HELP);
         }
-        if (UndoCommand.COMMAND_WORD.contains(text)) {
+        if (UndoCommand.COMMAND_WORD.contains(array[0])) {
             result.add(UndoCommand.COMMAND_HELP);
         }
-        if (ExitCommand.COMMAND_WORD.contains(text)) {
+        if (ExitCommand.COMMAND_WORD.contains(array[0])) {
             result.add(ExitCommand.COMMAND_HELP);
         }
-        if (SendCommand.COMMAND_WORD.contains(text)) {
+        if (SendCommand.COMMAND_WORD.contains(array[0])) {
             result.add(SendCommand.COMMAND_HELP);
         }
-        if (RedoCommand.COMMAND_WORD.contains(text)) {
+        if (RedoCommand.COMMAND_WORD.contains(array[0])) {
             result.add(RedoCommand.COMMAND_HELP);
         }
-        if (SelectCommand.COMMAND_WORD.contains(text)) {
+        if (SelectCommand.COMMAND_WORD.contains(array[0])) {
             result.add(SelectCommand.COMMAND_HELP);
+        }
+        if (ChangeThemeCommand.COMMAND_WORD.contains(array[0])) {
+            result.add(ChangeThemeCommand.COMMAND_HELP);
         }
         return result;
     }

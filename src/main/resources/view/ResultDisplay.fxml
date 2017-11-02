@@ -4,6 +4,6 @@
 <?import javafx.scene.layout.StackPane?>
 
 <StackPane fx:id="placeHolder" styleClass="pane-transparent" xmlns="http://javafx.com/javafx/8"
-    xmlns:fx="http://javafx.com/fxml/1" maxHeight="100" mouseTransparent="true">
+    xmlns:fx="http://javafx.com/fxml/1" maxHeight="100">
   <TextArea fx:id="resultDisplay" editable="false" styleClass="result-display"/>
 </StackPane>

@@ -20,10 +20,12 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.ChannelId;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Favourite;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
+
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
@@ -106,8 +108,10 @@ public class EditCommand extends UndoableCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         ChannelId updatedChannelId = editPersonDescriptor.getChannelId().orElse(personToEdit.getChannelId());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Favourite updatedFavs = editPersonDescriptor.getFavourite().orElse(personToEdit.getFavourite());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedChannelId, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedChannelId, updatedTags,
+                updatedFavs);
     }
 
     @Override
@@ -139,6 +143,7 @@ public class EditCommand extends UndoableCommand {
         private Address address;
         private ChannelId channelId;
         private Set<Tag> tags;
+        private Favourite favourite;
 
         public EditPersonDescriptor() {}
 
@@ -149,6 +154,7 @@ public class EditCommand extends UndoableCommand {
             this.address = toCopy.address;
             this.channelId = toCopy.channelId;
             this.tags = toCopy.tags;
+            this.favourite = toCopy.favourite;
         }
 
         /**
@@ -206,6 +212,8 @@ public class EditCommand extends UndoableCommand {
         public Optional<Set<Tag>> getTags() {
             return Optional.ofNullable(tags);
         }
+
+        public Optional<Favourite> getFavourite() { return Optional.ofNullable(favourite); }
 
         @Override
         public boolean equals(Object other) {

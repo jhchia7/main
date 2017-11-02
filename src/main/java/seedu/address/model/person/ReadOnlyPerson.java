@@ -24,7 +24,8 @@ public interface ReadOnlyPerson {
     ChannelId getChannelId();
     ObjectProperty<UniqueTagList> tagProperty();
     Set<Tag> getTags();
-    boolean getFavourite();
+    ObjectProperty<Favourite> faveProperty();
+    Favourite getFavourite();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
