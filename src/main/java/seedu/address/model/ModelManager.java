@@ -112,6 +112,12 @@ public class ModelManager extends ComponentManager implements Model {
         }
     }
 
+    @Override
+    public ObservableList<ReadOnlyPerson> sortNameAscend() {
+        ObservableList<ReadOnlyPerson> list = addressBook.getPersonListNameSortAscend();
+        return FXCollections.unmodifiableObservableList(list);
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
