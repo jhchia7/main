@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 import com.google.api.services.youtube.model.Channel;
 import com.google.common.eventbus.Subscribe;
 
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
