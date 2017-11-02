@@ -1,13 +1,25 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
 import java.util.List;
+import java.util.Set;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.ChannelId;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.Favourite;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
 import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Adds a person identified using it's last displayed index from the address book to the favourites list.
@@ -28,48 +40,65 @@ public class FavCommand extends UndoableCommand {
 
     public static final String MESSAGE_FAVE_PERSON_SUCCESS = "Added Person to Favourites: %1$s";
     public static final String MESSAGE_UNFAVE_PERSON_SUCCESS = "Removed Person from Favourites: %1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person is already in the favourites list.";
 
-    private final Index targetIndex;
-    private boolean status;
+    private final Index index;
+    private final String faveString;
 
-    public FavCommand(Index targetIndex, boolean status) {
-        this.targetIndex = targetIndex;
-        this.status = status;
+    /**
+     * @param index of the person in the filtered person list to edit
+     * @param faveState expression of the person's new favourites state
+     */
+    public FavCommand(Index index, String faveState) {
+        requireNonNull(index);
+        requireNonNull(faveState);
+        this.index = index;
+        this.faveString = faveState;
     }
-
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-
         List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+        if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        ReadOnlyPerson personToFave = lastShownList.get(targetIndex.getZeroBased());
+        ReadOnlyPerson personToEdit = lastShownList.get(index.getZeroBased());
+        Person editedPerson = createEditedPerson(personToEdit, faveString);
 
         try {
-            model.favPerson(personToFave, status);
+            model.updatePerson(personToEdit, editedPerson);
         } catch (DuplicatePersonException dpe) {
-            assert false : "The target person cannot be already in the favourites list";
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
-            assert false : "The target person cannot be found";
+            throw new AssertionError("The target person cannot be missing");
         }
-
-        if (status == true) {
-            return new CommandResult(String.format(MESSAGE_FAVE_PERSON_SUCCESS, personToFave));
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        if (faveString.equals("true")) {
+            return new CommandResult(String.format(MESSAGE_FAVE_PERSON_SUCCESS, editedPerson));
         }
-
         else {
-            return new CommandResult(String.format(MESSAGE_UNFAVE_PERSON_SUCCESS, personToFave));
+            return new CommandResult(String.format(MESSAGE_UNFAVE_PERSON_SUCCESS, editedPerson));
         }
     }
 
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof FavCommand // instanceof handles nulls
-                && this.targetIndex.equals(((FavCommand) other).targetIndex)); // state check
+    /**
+     * Creates and returns a {@code Person} with the updated faveState.
+     */
+    private static Person createEditedPerson(ReadOnlyPerson personToEdit,
+                                             String faveString) {
+        assert personToEdit != null;
+
+        Name updatedName = personToEdit.getName();
+        Phone updatedPhone = personToEdit.getPhone();
+        Email updatedEmail = personToEdit.getEmail();
+        Address updatedAddress = personToEdit.getAddress();
+        ChannelId updatedChannelId = personToEdit.getChannelId();
+        Set<Tag> updatedTags = personToEdit.getTags();
+        Favourite updatedFavs = new Favourite(faveString);
+
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedChannelId, updatedTags,
+                updatedFavs);
     }
 }

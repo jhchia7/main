@@ -92,18 +92,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.add(newPerson);
     }
 
-    /** Adds or removes a person to the favourites list.
-     * @throws DuplicatePersonException if the person is already in the favourites list.
-     */
-    public void favPerson(ReadOnlyPerson target, boolean fave)
-            throws DuplicatePersonException, PersonNotFoundException {
-        requireNonNull(target);
-
-        Person favedPerson = new Person(target);
-        favedPerson.setFavourite(fave);
-        persons.setPerson(target, favedPerson);
-    }
-
     /**
      * Replaces the given person {@code target} in the list with {@code editedReadOnlyPerson}.
      * {@code AddressBook}'s tag list will be updated with the tags of {@code editedReadOnlyPerson}.
