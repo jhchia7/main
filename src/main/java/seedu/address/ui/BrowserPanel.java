@@ -16,7 +16,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
-import seedu.address.logic.YouTubeAuthorize;
+import seedu.address.logic.YouTubeAuthorizer;
 import seedu.address.model.person.ReadOnlyPerson;
 
 //@@author jhchia7
@@ -61,7 +61,8 @@ public class BrowserPanel extends UiPart<Region> {
 
     private void loadPersonPage(ReadOnlyPerson person) throws IOException {
 
-        channel = YouTubeAuthorize.getYouTubeChannel(person.getChannelId().toString());
+        YouTubeAuthorizer youTubeAuthorizer = new YouTubeAuthorizer();
+        channel = youTubeAuthorizer.getYouTubeChannel(person.getChannelId().toString(), "statistics,snippet");
 
         Text title = new Text(getChannelTitle());
         title.setFont(Font.font("Calibri", 40));
