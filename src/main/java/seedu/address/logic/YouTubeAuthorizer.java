@@ -29,25 +29,25 @@ import com.google.api.services.youtube.model.ChannelListResponse;
  * Data API client service to the caller
  */
 
-public final class YouTubeAuthorize {
+public class YouTubeAuthorizer {
 
 
     /** Application name. */
-    private static final String APPLICATION_NAME = "API Sample";
+    private final String APPLICATION_NAME = "API Sample";
 
     /** Directory to store user credentials for this application. */
-    private static final java.io.File DATA_STORE_DIR = new java.io.File(
+    private final java.io.File DATA_STORE_DIR = new java.io.File(
             System.getProperty("user.home"), ".credentials/youtube-java-quickstart");
 
     /** Global instance of the {@link FileDataStoreFactory}. */
-    private static FileDataStoreFactory dataStoreFactory;
+    private FileDataStoreFactory dataStoreFactory;
 
     /** Global instance of the JSON factory. */
-    private static final JsonFactory JSON_FACTORY =
+    private final JsonFactory JSON_FACTORY =
             JacksonFactory.getDefaultInstance();
 
     /** Global instance of the HTTP transport. */
-    private static HttpTransport httpTransport;
+    private HttpTransport httpTransport;
 
     /** Global instance of the scopes required by this quickstart.
      *
@@ -57,7 +57,7 @@ public final class YouTubeAuthorize {
     private static final List<String> SCOPES =
             Arrays.asList(YouTubeScopes.YOUTUBE_READONLY);
 
-    static {
+    public YouTubeAuthorizer() {
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
             dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
@@ -73,7 +73,7 @@ public final class YouTubeAuthorize {
      * @return an authorized Credential object.
      * @throws IOException
      */
-    private static Credential authorize(Class classToAuthorize) throws IOException, ClassNotFoundException {
+    private Credential authorize(Class classToAuthorize) throws IOException, ClassNotFoundException {
         //Class myClass = Class.forName(className);
         // Load client secrets.
         InputStream in =
@@ -100,21 +100,20 @@ public final class YouTubeAuthorize {
      * @return an authorized API client service
      * @throws IOException
      */
-    public static YouTube getYouTubeService(Class classToAuthorize) throws IOException, ClassNotFoundException {
+    private YouTube getYouTubeService(Class classToAuthorize) throws IOException, ClassNotFoundException {
         Credential credential = authorize(classToAuthorize);
         return new YouTube.Builder(httpTransport, JSON_FACTORY, credential)
                 .setApplicationName(APPLICATION_NAME)
                 .build();
     }
 
-    public static Channel getYouTubeChannel(String targetChannelId) {
+    public Channel getYouTubeChannel(String targetChannelId) {
+
 
         YouTube youtube = null;
         try {
-            youtube = YouTubeAuthorize.getYouTubeService(YouTubeAuthorize.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+            youtube = getYouTubeService(YouTubeAuthorizer.class);
+        } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
 
@@ -125,6 +124,7 @@ public final class YouTubeAuthorize {
 
         YouTube.Channels.List channelsListByIdRequest = null;
         try {
+            assert youtube != null;
             channelsListByIdRequest = youtube.channels().list(parameters.get("part").toString());
         } catch (IOException e) {
             e.printStackTrace();
@@ -135,6 +135,7 @@ public final class YouTubeAuthorize {
 
         ChannelListResponse response = null;
         try {
+            assert channelsListByIdRequest != null;
             response = channelsListByIdRequest.execute();
         } catch (IOException e) {
             e.printStackTrace();
@@ -142,9 +143,10 @@ public final class YouTubeAuthorize {
 
         Channel youtubeChannel = null;
         try {
+            assert response != null;
             youtubeChannel = response.getItems().get(0);
         } catch (IndexOutOfBoundsException e) {
-            return youtubeChannel;
+            return null;
         }
 
         return youtubeChannel;
