@@ -29,7 +29,7 @@ import com.google.api.services.youtube.model.ChannelListResponse;
  * Data API client service to the caller
  */
 
-public final class YouTubeAuthorize {
+public final class YouTubeAuthorizer {
 
 
     /** Application name. */
@@ -111,7 +111,7 @@ public final class YouTubeAuthorize {
 
         YouTube youtube = null;
         try {
-            youtube = YouTubeAuthorize.getYouTubeService(YouTubeAuthorize.class);
+            youtube = YouTubeAuthorizer.getYouTubeService(YouTubeAuthorizer.class);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
