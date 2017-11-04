@@ -202,7 +202,7 @@ Adds the 2nd person in the address book to the favourites list.
 `fave 1` +
 Adds the 1st person in the results of the `find` command to the favourites list.
 
-
+// tag::selectcommand[]
 === Selecting a person : `select`
 
 Selects the person identified by the index number used in the last person listing and shows the YouTube profile of the person (Figure 2.10.1). +
@@ -225,10 +225,11 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command. +
+// end::selectcommand[]
 
 
 
-
+// tag::sendcommand[]
 === Sending a message to a person : `send`
 
 This command will redirect you to third-party communication applications like Windows Mail and WhatsApp (to-be-implemented). This command will automatically fill up the information of your contact in the third party application for you. +
@@ -269,6 +270,7 @@ _Figure 4.11.4 : New email_
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ====
+// end::sendcommand[]
 
 === Sorting the contacts by name (ascending order) : `sortascend`
 This command allows the user to sort the contacts by name, lexicographically ascending. +
@@ -373,6 +375,7 @@ There is no need to save manually.
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
+// tag::channelidfaq[]
 [[get-channel-id]]
 *Q*: How do I find the Channel ID of a YouTube channel? +
 *A*: YouTube allows a channel to have link:https://support.google.com/youtube/answer/6180214?hl=en[multiple URLs].
@@ -388,6 +391,7 @@ Step 3. Copy the channel ID from the URL of the page.
 
 image::get-channel-id-copy.png[width=500]
 _Figure 5.1 : Random video page of the target channel_
+// end::channelidfaq[]
 
 == Command Summary
 

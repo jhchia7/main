@@ -463,6 +463,7 @@ image::UndoRedoActivityDiagram.png[width="200"]
 **Cons:** Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things. +
 // end::undoredo[]
 
+// tag::selectcommand[]
 === Select command
 
 In its initial form, the select command shows the Google results of the contact’s name. With the application targeting a more specific group of users, YouTubers, the team believes that the select command can be better used to display the profile of the YouTuber instead. The select command opens the profile of the contact selected. The profile of the contacts displays various link:#dynamic-information[dynamic information] which is updated automatically by the application using the YouTube Data API.
@@ -501,6 +502,7 @@ _Figure 3.5.3.2 : Profile graphical user interface_
 **Alternative 2:** Use YouTube Username. +
 **Pros:** Might be more intuitive for the user and easier to type in. +
 **Cons:** There are so many channels with the same highly sought after names (sans the bigger channels). Although it will be easier to type in for the user as most channel names are easy to read, the users might mistake the channel title for the channel username, resulting in the wrong channel being saved. +
+// end::selectcommand[]
 
 
 === Favourites mechanism
