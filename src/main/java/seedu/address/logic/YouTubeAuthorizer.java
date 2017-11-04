@@ -31,24 +31,6 @@ import com.google.api.services.youtube.model.ChannelListResponse;
 
 public class YouTubeAuthorizer {
 
-
-    /** Application name. */
-    private final String APPLICATION_NAME = "API Sample";
-
-    /** Directory to store user credentials for this application. */
-    private final java.io.File DATA_STORE_DIR = new java.io.File(
-            System.getProperty("user.home"), ".credentials/youtube-java-quickstart");
-
-    /** Global instance of the {@link FileDataStoreFactory}. */
-    private FileDataStoreFactory dataStoreFactory;
-
-    /** Global instance of the JSON factory. */
-    private final JsonFactory JSON_FACTORY =
-            JacksonFactory.getDefaultInstance();
-
-    /** Global instance of the HTTP transport. */
-    private HttpTransport httpTransport;
-
     /** Global instance of the scopes required by this quickstart.
      *
      * If modifying these scopes, delete your previously saved credentials
@@ -57,14 +39,35 @@ public class YouTubeAuthorizer {
     private static final List<String> SCOPES =
             Arrays.asList(YouTubeScopes.YOUTUBE_READONLY);
 
+    /** Application name. */
+    private String applicationName;
+
+    /** Directory to store user credentials for this application. */
+    private final java.io.File dataStoreDir;
+
+    /** Global instance of the {@link FileDataStoreFactory}. */
+    private FileDataStoreFactory dataStoreFactory;
+
+    /** Global instance of the JSON factory. */
+    private final JsonFactory jsonFactory =
+            JacksonFactory.getDefaultInstance();
+
+    /** Global instance of the HTTP transport. */
+    private HttpTransport httpTransport;
+
+
     public YouTubeAuthorizer() {
+        dataStoreDir = new java.io.File(
+                System.getProperty("user.home"), ".credentials/youtube-java-quickstart");
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-            dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
+            dataStoreFactory = new FileDataStoreFactory(dataStoreDir);
         } catch (Throwable t) {
             t.printStackTrace();
             System.exit(1);
         }
+
+        applicationName = "TABCC";
     }
 
     /**
@@ -79,12 +82,12 @@ public class YouTubeAuthorizer {
         InputStream in =
                 classToAuthorize.getClass().getResourceAsStream("/client_secret.json");
         GoogleClientSecrets clientSecrets =
-                GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+                GoogleClientSecrets.load(jsonFactory, new InputStreamReader(in));
 
         // Build flow and trigger user authorization request.
         GoogleAuthorizationCodeFlow flow =
                 new GoogleAuthorizationCodeFlow.Builder(
-                        httpTransport, JSON_FACTORY, clientSecrets, SCOPES)
+                        httpTransport, jsonFactory, clientSecrets, SCOPES)
                         .setDataStoreFactory(dataStoreFactory)
                         .setAccessType("offline")
                         .build();
@@ -102,8 +105,8 @@ public class YouTubeAuthorizer {
      */
     private YouTube getYouTubeService(Class classToAuthorize) throws IOException, ClassNotFoundException {
         Credential credential = authorize(classToAuthorize);
-        return new YouTube.Builder(httpTransport, JSON_FACTORY, credential)
-                .setApplicationName(APPLICATION_NAME)
+        return new YouTube.Builder(httpTransport, jsonFactory, credential)
+                .setApplicationName(applicationName)
                 .build();
     }
 
