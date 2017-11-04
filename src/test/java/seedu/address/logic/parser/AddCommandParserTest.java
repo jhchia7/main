@@ -150,7 +150,7 @@ public class AddCommandParserTest {
         // invalid channel ID
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                         + ADDRESS_DESC_BOB + INVALID_CHANNEL_ID_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                ChannelId.MESSAGE_CHANNEL_ID_CONSTRAINTS);
+                ChannelId.MESSAGE_CHANNEL_ID_INVALID);
 
         // invalid tag
         assertParseFailure(parser, AddCommand.COMMAND_WORD + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB

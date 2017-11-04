@@ -2,7 +2,10 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 
+import com.google.api.services.youtube.model.Channel;
+
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.YouTubeAuthorizer;
 
 //@@author jhchia7
 
@@ -12,14 +15,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
  */
 public class ChannelId {
 
-    public static final String MESSAGE_CHANNEL_ID_CONSTRAINTS =
-            "Person's channel ID can take any values, and it should not be blank";
-
-    /*
-     * The first character of the channel ID must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
-    public static final String CHANNEL_ID_VALIDATION_REGEX = "[^\\s].*";
+    public static final String MESSAGE_CHANNEL_ID_INVALID = "Person's Channel ID is invalid.";
 
     public final String value;
 
@@ -31,7 +27,7 @@ public class ChannelId {
     public ChannelId(String channelId) throws IllegalValueException {
         requireNonNull(channelId);
         if (!isValidChannelId(channelId)) {
-            throw new IllegalValueException(MESSAGE_CHANNEL_ID_CONSTRAINTS);
+            throw new IllegalValueException(MESSAGE_CHANNEL_ID_INVALID);
         }
         this.value = channelId;
     }
@@ -40,7 +36,10 @@ public class ChannelId {
      * Returns true if a given string is a valid person channel ID.
      */
     public static boolean isValidChannelId (String test) {
-        return test.matches(CHANNEL_ID_VALIDATION_REGEX);
+        Channel channel = YouTubeAuthorizer.getYouTubeChannel(test);
+        boolean isChannelAvailable = (channel != null);
+        return isChannelAvailable;
+
     }
 
     @Override
