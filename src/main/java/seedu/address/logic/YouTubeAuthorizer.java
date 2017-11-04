@@ -107,7 +107,13 @@ public final class YouTubeAuthorizer {
                 .build();
     }
 
-    public static Channel getYouTubeChannel(String targetChannelId) {
+    /**
+     * Returns a YouTube channel to the caller.
+     * @param targetChannelId string of the channel ID
+     * @param dataToGet Channel resources to get eg. "statistics,snippet"
+     * @return
+     */
+    public static Channel getYouTubeChannel(String targetChannelId, String dataToGet) {
 
         YouTube youtube = null;
         try {
@@ -120,7 +126,7 @@ public final class YouTubeAuthorizer {
 
 
         HashMap<String, String> parameters = new HashMap<>();
-        parameters.put("part", "statistics,snippet");
+        parameters.put("part", dataToGet);
         parameters.put("id", targetChannelId);
 
         YouTube.Channels.List channelsListByIdRequest = null;

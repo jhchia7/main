@@ -36,7 +36,7 @@ public class ChannelId {
      * Returns true if a given string is a valid person channel ID.
      */
     public static boolean isValidChannelId (String test) {
-        Channel channel = YouTubeAuthorizer.getYouTubeChannel(test);
+        Channel channel = YouTubeAuthorizer.getYouTubeChannel(test, "statistics,snippet");
         boolean isChannelAvailable = (channel != null);
         return isChannelAvailable;
 

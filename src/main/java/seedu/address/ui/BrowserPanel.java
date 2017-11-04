@@ -61,12 +61,7 @@ public class BrowserPanel extends UiPart<Region> {
 
     private void loadPersonPage(ReadOnlyPerson person) throws IOException {
 
-<<<<<<< Updated upstream
-        channel = YouTubeAuthorizer.getYouTubeChannel(person.getChannelId().toString());
-=======
-        YouTubeAuthorizer youTubeAuthorizer = new YouTubeAuthorizer();
-        channel = youTubeAuthorizer.getYouTubeChannel(person.getChannelId().toString(), "statistics,snippet");
->>>>>>> Stashed changes
+        channel = YouTubeAuthorizer.getYouTubeChannel(person.getChannelId().toString(), "statistics,snippet");
 
         Text title = new Text(getChannelTitle());
         title.setFont(Font.font("Calibri", 40));
