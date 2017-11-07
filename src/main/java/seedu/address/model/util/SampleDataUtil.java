@@ -51,27 +51,7 @@ public class SampleDataUtil {
                         new ChannelId("UCuHQqPko8f0lZtc8D2Z7BoA"),
                         getTagSet("Gaming", "Comedy"),
                         new Favourite("false")),
-                new Person(new Name("Lisa Gade"),
-                        new Phone("92492021"),
-                        new Email("mobiletechreview@example.com"),
-                        new Address("440 Old Iron Works Rd Spartanburg, SC 29302 USA"),
-                        new ChannelId("UCW6J17hZ_Vgr6cQgd_kHt5A"),
-                        getTagSet("Technology"),
-                        new Favourite("false")),
-                new Person(new Name("Gary Vaynerchuk"),
-                        new Phone("92624417"),
-                        new Email("garyvee@example.com"),
-                        new Address("1170 Angelo Dr, Beverly Hills, CA 90210, USA"),
-                        new ChannelId("UCctXZhXmG-kf3tlIXgVZUlw"),
-                        getTagSet("People"),
-                        new Favourite("false")),
-                new Person(new Name("Edberg Oliveiro"),
-                        new Phone("92624417"),
-                        new Email("zfedberg@example.com"),
-                        new Address("Domaregatan 21, 824 43 Hudiksvall, Sweden"),
-                        new ChannelId("UCvlvI5s742g4cJiXS_ZYdfQ"),
-                        getTagSet("Gaming", "Comedy"),
-                        new Favourite("false"))
+
             };
         } catch (IllegalValueException e) {
             throw new AssertionError("sample data cannot be invalid", e);
