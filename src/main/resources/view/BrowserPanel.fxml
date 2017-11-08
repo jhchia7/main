@@ -17,7 +17,7 @@
             <TextFlow fx:id="channelTitle" layoutX="288.0" layoutY="68.0" prefHeight="35.0" prefWidth="432.0" AnchorPane.topAnchor="50.0" />
             <TextFlow fx:id="subscriberCount" layoutX="288.0" layoutY="50.0" prefHeight="35.0" prefWidth="432.0" AnchorPane.topAnchor="105.0" />
             <TextFlow fx:id="viewCount" layoutX="288.0" layoutY="159.0" prefHeight="35.0" prefWidth="432.0" AnchorPane.topAnchor="160.0" />
-            <TextFlow fx:id="createDate" layoutX="288.0" layoutY="215.0" prefHeight="35.0" prefWidth="432.0" />
+            <TextFlow fx:id="videoCount" layoutX="288.0" layoutY="215.0" prefHeight="35.0" prefWidth="432.0" />
           </children>
         </AnchorPane>
       </content>
